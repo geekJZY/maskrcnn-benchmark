@@ -40,13 +40,13 @@ _C.MODEL.WEIGHT = ""
 # -----------------------------------------------------------------------------
 _C.INPUT = CN()
 # Size of the smallest side of the image during training
-_C.INPUT.MIN_SIZE_TRAIN = (500,)  # (800,)
+_C.INPUT.MIN_SIZE_TRAIN = (600,)  # (800,)
 # Maximum size of the side of the image during training
-_C.INPUT.MAX_SIZE_TRAIN = 600
+_C.INPUT.MAX_SIZE_TRAIN = 1000
 # Size of the smallest side of the image during testing
-_C.INPUT.MIN_SIZE_TEST = 500
+_C.INPUT.MIN_SIZE_TEST = 600
 # Maximum size of the side of the image during testing
-_C.INPUT.MAX_SIZE_TEST = 600
+_C.INPUT.MAX_SIZE_TEST = 1000
 # Values to be used for image normalization
 _C.INPUT.PIXEL_MEAN = [102.9801, 115.9465, 122.7717]
 # Values to be used for image normalization
@@ -417,6 +417,6 @@ _C.TEST.DETECTIONS_PER_IMG = 100
 # ---------------------------------------------------------------------------- #
 # Misc options
 # ---------------------------------------------------------------------------- #
-_C.OUTPUT_DIR = "."
+_C.OUTPUT_DIR = "checkpoints/largerImg"
 
 _C.PATHS_CATALOG = os.path.join(os.path.dirname(__file__), "paths_catalog.py")

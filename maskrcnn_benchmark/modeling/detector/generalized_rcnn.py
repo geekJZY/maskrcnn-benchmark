@@ -58,10 +58,11 @@ class GeneralizedRCNN(nn.Module):
             result = proposals
             detector_losses = {}
 
-        # convert image format to opencv format
-        image = visualizer.transformBackForShowing(images.tensors[0].to("cpu"), None)[0].numpy().astype(np.uint8)
-        image = np.transpose(image, (1, 2, 0))
-        visualizer.run_on_opencv_image_prediction(image, result)
+        if not self.training:
+            # convert image format to opencv format
+            image = visualizer.transformBackForShowing(images.tensors[0].to("cpu"), None)[0].numpy().astype(np.uint8)
+            image = np.transpose(image, (1, 2, 0))
+            visualizer.run_on_opencv_image_prediction(image, result)
 
         if self.training:
             losses = {}
