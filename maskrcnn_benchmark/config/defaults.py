@@ -40,13 +40,13 @@ _C.MODEL.WEIGHT = ""
 # -----------------------------------------------------------------------------
 _C.INPUT = CN()
 # Size of the smallest side of the image during training
-_C.INPUT.MIN_SIZE_TRAIN = (600,)  # (800,)
+_C.INPUT.MIN_SIZE_TRAIN = (500,)  # (800,)
 # Maximum size of the side of the image during training
-_C.INPUT.MAX_SIZE_TRAIN = 1000
+_C.INPUT.MAX_SIZE_TRAIN = 800
 # Size of the smallest side of the image during testing
-_C.INPUT.MIN_SIZE_TEST = 600
+_C.INPUT.MIN_SIZE_TEST = 500
 # Maximum size of the side of the image during testing
-_C.INPUT.MAX_SIZE_TEST = 1000
+_C.INPUT.MAX_SIZE_TEST = 800
 # Values to be used for image normalization
 _C.INPUT.PIXEL_MEAN = [102.9801, 115.9465, 122.7717]
 # Values to be used for image normalization

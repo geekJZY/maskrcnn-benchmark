@@ -7,6 +7,7 @@ from torch.utils.data import Dataset
 from maskrcnn_benchmark.structures.bounding_box import BoxList
 from maskrcnn_benchmark.structures.segmentation_mask import SegmentationMask
 
+from matplotlib import pyplot as plt
 
 class AnticlineDataset(Dataset):
     def __init__(self, root_dir, transforms=None, trainFlag = 'train'):
@@ -29,7 +30,11 @@ class AnticlineDataset(Dataset):
     def __getitem__(self, idx):
         # load the image as a PIL Image
         path = self.imagePaths[idx]
-        image = Image.open(join(self.root_dir, path))
+        image = Image.open(join(self.root_dir, path)).convert(mode='L').convert(mode='RGB')
+
+        # # for test
+        # plt.imshow(image)
+        # plt.show()
 
         # loading points for mask
         pointsForMask = self.labels[path]
