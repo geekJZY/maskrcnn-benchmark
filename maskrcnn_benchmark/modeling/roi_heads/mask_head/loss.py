@@ -88,7 +88,8 @@ class MaskRCNNLossComputation(object):
             positive_inds = torch.nonzero(labels_per_image > 0).squeeze(1)
 
             segmentation_masks = matched_targets.get_field("masks")
-            segmentation_masks = segmentation_masks[positive_inds]
+            if len(positive_inds) > 1:
+                segmentation_masks = segmentation_masks[positive_inds]
 
             positive_proposals = proposals_per_image[positive_inds]
 

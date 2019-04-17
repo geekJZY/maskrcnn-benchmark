@@ -4,7 +4,7 @@ MODEL:
   BACKBONE:
     CONV_BODY: "R-50-FPN"
   RESNETS:
-    BACKBONE_OUT_CHANNELS: 256
+    BACKBONE_OUT_CHANNELS: 1
   RPN:
     USE_FPN: True
     ANCHOR_STRIDE: (4, 8, 16, 32, 64)
@@ -30,8 +30,8 @@ MODEL:
     SHARE_BOX_FEATURE_EXTRACTOR: False
   MASK_ON: True
 DATASETS:
-  TRAIN: ("coco_2014_train", "coco_2014_valminusminival")
-  TEST: ("coco_2014_minival",)
+  ROOT: "/mnt/sdd/jiangziyu/chevAnticline/data"
+  TEST: "testResults"
 DATALOADER:
   SIZE_DIVISIBILITY: 32
 SOLVER:

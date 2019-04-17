@@ -7,7 +7,7 @@ import torch.utils.data
 from maskrcnn_benchmark.utils.comm import get_world_size
 from maskrcnn_benchmark.utils.imports import import_file
 
-from . import datasets as D
+from .datasets.anticline_dataset import AnticlineDataset
 from . import samplers
 
 from .collate_batch import BatchCollator
@@ -147,11 +147,12 @@ def make_data_loader(cfg, is_train=True, is_distributed=False, start_iter=0):
     paths_catalog = import_file(
         "maskrcnn_benchmark.config.paths_catalog", cfg.PATHS_CATALOG, True
     )
-    DatasetCatalog = paths_catalog.DatasetCatalog
-    dataset_list = cfg.DATASETS.TRAIN if is_train else cfg.DATASETS.TEST
+    # DatasetCatalog = paths_catalog.DatasetCatalog
+    # dataset_list = cfg.DATASETS.TRAIN if is_train else cfg.DATASETS.TEST
 
-    transforms = build_transforms(cfg, is_train)
-    datasets = build_dataset(dataset_list, transforms, DatasetCatalog, is_train)
+    transforms, transformForShowing = build_transforms(cfg, is_train)
+    # datasets = build_dataset(dataset_list, transforms, DatasetCatalog, is_train)
+    datasets = [AnticlineDataset(cfg.DATASETS.ROOT, transforms=transforms, trainFlag='train' if is_train else 'eval')]
 
     data_loaders = []
     for dataset in datasets:
@@ -167,6 +168,7 @@ def make_data_loader(cfg, is_train=True, is_distributed=False, start_iter=0):
             batch_sampler=batch_sampler,
             collate_fn=collator,
         )
+        data_loader.transformBackForShowing = transformForShowing
         data_loaders.append(data_loader)
     if is_train:
         # during training, a single (possibly concatenated) data_loader is returned

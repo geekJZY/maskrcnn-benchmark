@@ -43,6 +43,7 @@ def do_train(
     checkpointer,
     device,
     checkpoint_period,
+    visualizer,
     arguments,
 ):
     logger = logging.getLogger("maskrcnn_benchmark.trainer")
@@ -63,7 +64,7 @@ def do_train(
         images = images.to(device)
         targets = [target.to(device) for target in targets]
 
-        loss_dict = model(images, targets)
+        loss_dict = model(images, targets, visualizer)
 
         losses = sum(loss for loss in loss_dict.values())
 

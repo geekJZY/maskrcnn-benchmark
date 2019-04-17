@@ -24,6 +24,7 @@ from maskrcnn_benchmark.utils.comm import synchronize, get_rank
 from maskrcnn_benchmark.utils.imports import import_file
 from maskrcnn_benchmark.utils.logger import setup_logger
 from maskrcnn_benchmark.utils.miscellaneous import mkdir
+from maskrcnn_benchmark.utils.visualizer import AnticlineDemo
 
 
 def train(cfg, local_rank, distributed):
@@ -33,6 +34,8 @@ def train(cfg, local_rank, distributed):
 
     optimizer = make_optimizer(cfg, model)
     scheduler = make_lr_scheduler(cfg, optimizer)
+
+    visualizer = AnticlineDemo(torch.device(cfg.MODEL.DEVICE))
 
     if distributed:
         model = torch.nn.parallel.DistributedDataParallel(
@@ -59,6 +62,7 @@ def train(cfg, local_rank, distributed):
         is_distributed=distributed,
         start_iter=arguments["iteration"],
     )
+    visualizer.transformBackForShowing = data_loader.transformBackForShowing
 
     checkpoint_period = cfg.SOLVER.CHECKPOINT_PERIOD
 
@@ -70,6 +74,7 @@ def train(cfg, local_rank, distributed):
         checkpointer,
         device,
         checkpoint_period,
+        visualizer,
         arguments,
     )
 

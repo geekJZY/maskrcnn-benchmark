@@ -13,7 +13,7 @@ from ..utils.comm import synchronize
 from ..utils.timer import Timer, get_time_str
 
 
-def compute_on_dataset(model, data_loader, device, timer=None):
+def compute_on_dataset(model, data_loader, device, timer=None, visualizer=None):
     model.eval()
     results_dict = {}
     cpu_device = torch.device("cpu")
@@ -23,7 +23,7 @@ def compute_on_dataset(model, data_loader, device, timer=None):
         with torch.no_grad():
             if timer:
                 timer.tic()
-            output = model(images)
+            output = model(images, visualizer=visualizer)
             if timer:
                 torch.cuda.synchronize()
                 timer.toc()
@@ -66,6 +66,7 @@ def inference(
         expected_results=(),
         expected_results_sigma_tol=4,
         output_folder=None,
+        visualizer=None
 ):
     # convert to a torch.device for efficiency
     device = torch.device(device)
@@ -76,7 +77,7 @@ def inference(
     total_timer = Timer()
     inference_timer = Timer()
     total_timer.tic()
-    predictions = compute_on_dataset(model, data_loader, device, inference_timer)
+    predictions = compute_on_dataset(model, data_loader, device, inference_timer, visualizer=visualizer)
     # wait for all processes to complete before measuring the time
     synchronize()
     total_time = total_timer.toc()

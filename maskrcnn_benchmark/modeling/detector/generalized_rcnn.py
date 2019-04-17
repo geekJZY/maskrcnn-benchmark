@@ -4,6 +4,7 @@ Implements the Generalized R-CNN framework
 """
 
 import torch
+import numpy as np
 from torch import nn
 
 from maskrcnn_benchmark.structures.image_list import to_image_list
@@ -30,11 +31,12 @@ class GeneralizedRCNN(nn.Module):
         self.rpn = build_rpn(cfg, self.backbone.out_channels)
         self.roi_heads = build_roi_heads(cfg, self.backbone.out_channels)
 
-    def forward(self, images, targets=None):
+    def forward(self, images, targets=None, visualizer=None):
         """
         Arguments:
             images (list[Tensor] or ImageList): images to be processed
             targets (list[BoxList]): ground-truth boxes present in the image (optional)
+            visualizer： for visualization
 
         Returns:
             result (list[BoxList] or dict[Tensor]): the output from the model.
@@ -55,6 +57,11 @@ class GeneralizedRCNN(nn.Module):
             x = features
             result = proposals
             detector_losses = {}
+
+        # convert image format to opencv format
+        image = visualizer.transformBackForShowing(images.tensors[0].to("cpu"), None)[0].numpy().astype(np.uint8)
+        image = np.transpose(image, (1, 2, 0))
+        visualizer.run_on_opencv_image_prediction(image, result)
 
         if self.training:
             losses = {}

@@ -1,5 +1,6 @@
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
 import random
+import numpy as np
 
 import torch
 import torchvision
@@ -87,4 +88,21 @@ class Normalize(object):
         if self.to_bgr255:
             image = image[[2, 1, 0]] * 255
         image = F.normalize(image, mean=self.mean, std=self.std)
+        return image, target
+
+
+class NormalizeBack(object):
+    def __init__(self, normalize):
+        Nmean = np.array(normalize.mean)
+        Nstd = np.array(normalize.std)
+        self.mean = (-Nmean/Nstd).tolist()
+        self.std = (1/Nstd).tolist()
+        self.to_bgr255 = normalize.to_bgr255
+
+    def __call__(self, image, target):
+
+        image = F.normalize(image, mean=self.mean, std=self.std)
+        # if it was not transform to bgr255, It's needed to be done right now
+        if not self.to_bgr255:
+            image = image[[2, 1, 0]] * 255
         return image, target
