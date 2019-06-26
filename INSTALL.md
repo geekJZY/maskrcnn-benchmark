@@ -93,6 +93,8 @@ git clone https://github.com/cocodataset/cocoapi.git
 
 cd cocoapi/PythonAPI
 python setup.py build_ext install
+cd ..
+cd ..
 
 #### Method 2: (untested) 
 # clone a coco repo which has been modefied for windows 
@@ -103,8 +105,7 @@ python setup.py build_ext install
  pip install git+https://github.com/philferriere/cocoapi.git#subdirectory=PythonAPI
 
 # navigate back to INSTALL_DIR
-cd ..
-cd .. 
+ 
 # install apex
 
 git clone https://github.com/NVIDIA/apex.git
