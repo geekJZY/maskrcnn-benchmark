@@ -97,8 +97,8 @@ python setup.py build_ext install
 #### Method 2: (untested) 
 # clone a coco repo which has been modefied for windows 
 # Please note that for this method to work you need to have the Visual C++ 2015 build tools on your path 
-farther info on : https://github.com/philferriere/cocoapi 
-if you don't have it make sure to download and install: https://go.microsoft.com/fwlink/?LinkId=691126 
+#farther info on : https://github.com/philferriere/cocoapi 
+#if you don't have it make sure to download and install: https://go.microsoft.com/fwlink/?LinkId=691126 
 
  pip install git+https://github.com/philferriere/cocoapi.git#subdirectory=PythonAPI
 
