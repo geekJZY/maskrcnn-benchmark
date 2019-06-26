@@ -80,6 +80,8 @@ pip install ninja yacs cython matplotlib tqdm opencv-python
 nvcc -- version 
 conda install -c pytorch pytorch-nightly torchvision cudatoolkit=9.0
 
+### install coco api: 
+#### Methond 1: 
 git clone https://github.com/cocodataset/cocoapi.git
     
     #To prevent installation error do the following after commiting cocooapi : 
@@ -91,6 +93,14 @@ git clone https://github.com/cocodataset/cocoapi.git
 
 cd cocoapi/PythonAPI
 python setup.py build_ext install
+
+#### Method 2: (untested) 
+# clone a coco repo which has been modefied for windows 
+# Please note that for this method to work you need to have the Visual C++ 2015 build tools on your path 
+farther info on : https://github.com/philferriere/cocoapi 
+if you don't have it make sure to download and install: https://go.microsoft.com/fwlink/?LinkId=691126 
+
+ pip install git+https://github.com/philferriere/cocoapi.git#subdirectory=PythonAPI
 
 # navigate back to INSTALL_DIR
 cd ..
